@@ -1,0 +1,410 @@
+#!/bin/zsh
+VERSION="v5.4"
+AUTHOR="Mwangii K"
+
+# ============================================================
+# ⚡ Iris — The Messenger of Speed (v5.3)
+# Author: Harun Mwangi Kinuthia
+# ============================================================
+
+GREEN=$(tput setaf 2)
+RED=$(tput setaf 1)
+CYAN=$(tput setaf 6)
+YELLOW=$(tput setaf 3)
+RESET=$(tput sgr0)
+
+# Global flags
+QUIET=0
+JSON_OUTPUT=0
+SHOW_BANNER=1
+log_file="$HOME/.iris_history"
+
+# Help function
+show_help() {
+  cat << EOF
+${CYAN}⚡ Iris — The Messenger of Speed${RESET}
+
+Usage: iris [OPTIONS]
+
+Options:
+  -h, --help          Show this help message
+  -v, --version       Show version information
+  -q, --quiet         Quiet mode (minimal output)
+  -j, --json          Output results as JSON
+  -H, --history       Show test history
+  -s, --stats         Show detailed statistics
+  --no-banner         Skip the banner display
+
+Examples:
+  iris                  Run a speed test
+  iris --json           Output results as JSON
+  iris --history        View test history
+  iris --stats          Show detailed statistics
+  iris --quiet          Run with minimal output
+EOF
+}
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      show_help
+      exit 0
+      ;;
+    -v|--version)
+      echo "Iris ${VERSION} by ${AUTHOR}"
+      exit 0
+      ;;
+    -q|--quiet)
+      QUIET=1
+      SHOW_BANNER=0
+      shift
+      ;;
+    -j|--json)
+      JSON_OUTPUT=1
+      SHOW_BANNER=0
+      shift
+      ;;
+    -H|--history)
+      if [[ -f "$log_file" ]] && [[ -r "$log_file" ]]; then
+        echo "${CYAN}📊 Test History${RESET}"
+        echo "${CYAN}───────────────────────────────────────────────${RESET}"
+        awk -F',' '{printf "%-19s │ %8.2f Mbps ↓ │ %8.2f Mbps ↑ │ %6.2f ms │ %s\n", $1, $2, $3, $4, $5}' "$log_file" | head -20
+        echo "${CYAN}───────────────────────────────────────────────${RESET}"
+        echo "Showing last 20 tests. Full log: $log_file"
+      else
+        echo "${YELLOW}No test history found.${RESET}"
+      fi
+      exit 0
+      ;;
+    -s|--stats)
+      if [[ -f "$log_file" ]] && [[ -r "$log_file" ]]; then
+        count=$(wc -l < "$log_file" | tr -d ' ')
+        if [[ $count -gt 0 ]]; then
+          echo "${CYAN}📊 Detailed Statistics${RESET}"
+          echo "${CYAN}───────────────────────────────────────────────${RESET}"
+          awk -F',' '{
+            d+=$2; u+=$3; p+=$4
+            if (NR==1 || $2<dmin) dmin=$2
+            if (NR==1 || $2>dmax) dmax=$2
+            if (NR==1 || $3<umin) umin=$3
+            if (NR==1 || $3>umax) umax=$3
+            if (NR==1 || $4<pmin) pmin=$4
+            if (NR==1 || $4>pmax) pmax=$4
+            dsum2+=($2*$2); usum2+=($3*$3); psum2+=($4*$4)
+          } END {
+            if (NR>0) {
+              davg=d/NR; uavg=u/NR; pavg=p/NR
+              dstd=sqrt((dsum2/NR) - (davg*davg))
+              ustd=sqrt((usum2/NR) - (uavg*uavg))
+              pstd=sqrt((psum2/NR) - (pavg*pavg))
+              printf "Total Tests: %d\n\n", NR
+              printf "Download:\n"
+              printf "  Average: %.2f Mbps\n", davg
+              printf "  Min:     %.2f Mbps\n", dmin
+              printf "  Max:     %.2f Mbps\n", dmax
+              printf "  Std Dev: %.2f Mbps\n\n", dstd
+              printf "Upload:\n"
+              printf "  Average: %.2f Mbps\n", uavg
+              printf "  Min:     %.2f Mbps\n", umin
+              printf "  Max:     %.2f Mbps\n", umax
+              printf "  Std Dev: %.2f Mbps\n\n", ustd
+              printf "Ping:\n"
+              printf "  Average: %.2f ms\n", pavg
+              printf "  Min:     %.2f ms\n", pmin
+              printf "  Max:     %.2f ms\n", pmax
+              printf "  Std Dev: %.2f ms\n", pstd
+            }
+          }' "$log_file" | lolcat 2>/dev/null || awk -F',' '{
+            d+=$2; u+=$3; p+=$4
+            if (NR==1 || $2<dmin) dmin=$2
+            if (NR==1 || $2>dmax) dmax=$2
+            if (NR==1 || $3<umin) umin=$3
+            if (NR==1 || $3>umax) umax=$3
+            if (NR==1 || $4<pmin) pmin=$4
+            if (NR==1 || $4>pmax) pmax=$4
+            dsum2+=($2*$2); usum2+=($3*$3); psum2+=($4*$4)
+          } END {
+            if (NR>0) {
+              davg=d/NR; uavg=u/NR; pavg=p/NR
+              dstd=sqrt((dsum2/NR) - (davg*davg))
+              ustd=sqrt((usum2/NR) - (uavg*uavg))
+              pstd=sqrt((psum2/NR) - (pavg*pavg))
+              printf "Total Tests: %d\n\n", NR
+              printf "Download:\n"
+              printf "  Average: %.2f Mbps\n", davg
+              printf "  Min:     %.2f Mbps\n", dmin
+              printf "  Max:     %.2f Mbps\n", dmax
+              printf "  Std Dev: %.2f Mbps\n\n", dstd
+              printf "Upload:\n"
+              printf "  Average: %.2f Mbps\n", uavg
+              printf "  Min:     %.2f Mbps\n", umin
+              printf "  Max:     %.2f Mbps\n", umax
+              printf "  Std Dev: %.2f Mbps\n\n", ustd
+              printf "Ping:\n"
+              printf "  Average: %.2f ms\n", pavg
+              printf "  Min:     %.2f ms\n", pmin
+              printf "  Max:     %.2f ms\n", pmax
+              printf "  Std Dev: %.2f ms\n", pstd
+            }
+          }' "$log_file"
+        else
+          echo "${YELLOW}No test history found.${RESET}"
+        fi
+      else
+        echo "${YELLOW}No test history found.${RESET}"
+      fi
+      exit 0
+      ;;
+    --no-banner)
+      SHOW_BANNER=0
+      shift
+      ;;
+    *)
+      echo "${RED}Unknown option: $1${RESET}" >&2
+      echo "Use --help for usage information"
+      exit 1
+      ;;
+  esac
+done
+
+check_dep() {
+  command -v "$1" >/dev/null 2>&1 || {
+    echo "${YELLOW}Warning: $1 not found${RESET}"
+    echo "${YELLOW}Please install manually: brew install $1${RESET}"
+    if [[ "$1" == "speedtest" ]]; then
+      echo "${YELLOW}For Ookla Speedtest: brew tap ookla/speedtest && brew install speedtest${RESET}"
+      echo "${YELLOW}Or download from: https://www.speedtest.net/apps/cli${RESET}"
+      exit 1
+    fi
+  }
+}
+check_dep "speedtest"; check_dep "jq"; check_dep "figlet"; check_dep "lolcat"; check_dep "bc"
+
+progress_bar() {
+  local progress=$1 width=30
+  local filled=$((progress * width / 100))
+  local empty=$((width - filled))
+  printf "["; printf "%${filled}s" | tr ' ' '█'
+  printf "%${empty}s" | tr ' ' '░'; printf "] %3d%%\r" "$progress"
+}
+
+SPARKS=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
+SPARKLINE_MAX_LEN=60  # Limit sparkline length
+
+heartbeat_sparkline() {
+  local ping=$1 max=100
+  ((ping > max)) && ping=$max
+  local idx=$((ping * (${#SPARKS[@]} - 1) / max))
+  printf "%s" "${SPARKS[$((idx+1))]}"
+}
+
+# Convert bandwidth (bytes/sec) to Mbps
+bandwidth_to_mbps() {
+  local bw=$1
+  awk -v b="$bw" 'BEGIN {printf "%.2f", b/125000}'
+}
+
+# ------------------------- Color math helpers (optimized) -------------------------
+ping_color_code() {
+  local p=$(echo "$1" | sed 's/[^0-9.]//g')
+  [[ -z "$p" ]] && p=0
+  
+  # Use zsh floating point arithmetic instead of bc
+  local colorStep=$(( p / 100.0 ))
+  (( colorStep < 0.0 )) && colorStep=0.0
+  (( colorStep > 1.0 )) && colorStep=1.0
+  
+  local r g b
+  if (( colorStep < 0.5 )); then
+    # Green to Yellow: (0,255,0) -> (255,255,0)
+    r=$(awk -v s="$colorStep" 'BEGIN{printf "%d", 510*s}')
+    g=255
+    b=0
+  else
+    # Yellow to Red: (255,255,0) -> (255,0,0)
+    r=255
+    g=$(awk -v s="$colorStep" 'BEGIN{printf "%d", 255*(2-2*s)}')
+    b=0
+  fi
+  echo $((16 + (36 * (r / 51)) + (6 * (g / 51)) + (b / 51)))
+}
+
+# ------------------------- Gradient Latency Graph -------------------------
+draw_graph() {
+  local -a pings=("${(@f)1}"); [[ ${#pings[@]} -eq 0 ]] && return
+  echo ""; echo "${CYAN}📈 Latency Graph (ms)${RESET}"
+  for raw in "${pings[@]}"; do
+    local p=$(echo "$raw" | sed 's/[^0-9.]//g')
+    [[ -z "$p" || "$p" = "0" || "$p" = "0.00" ]] && continue
+    local bars=$(echo "$p / 2" | bc -l 2>/dev/null | awk '{printf "%d", $1}')
+    [[ -z "$bars" || "$bars" -lt 1 ]] && bars=1
+    printf "%6s ms | " "$p"
+    local color_code=$(ping_color_code "$p")
+    for ((i=0; i<bars; i++)); do printf "\033[38;5;%dm▇\033[0m" "$color_code"; done
+    echo ""
+  done
+  echo "${CYAN}───────────────────────────────────────────────${RESET}"
+}
+
+# ------------------------- Banner -------------------------
+if [[ $SHOW_BANNER -eq 1 ]]; then
+  clear
+  figlet -f slant "Iris" | lolcat 2>/dev/null || echo "${CYAN}⚡ Iris${RESET}"
+  echo "${CYAN}───────────────────────────────────────────────${RESET}"
+  echo "${YELLOW}🕒  $(date)${RESET}"
+  echo "${CYAN}───────────────────────────────────────────────${RESET}"
+fi
+
+# ------------------------- Geo info -------------------------
+if [[ $QUIET -eq 0 ]]; then
+  echo "🌍 Fetching network info..." | lolcat 2>/dev/null || echo "🌍 Fetching network info..."
+fi
+geo=$(curl -s --max-time 5 https://ipinfo.io/json)
+[[ -z "$geo" || "$geo" == *"error"* ]] && geo=$(curl -s --max-time 5 https://ipapi.co/json)
+[[ -z "$geo" || "$geo" == *"error"* ]] && geo=$(curl -s --max-time 5 https://ifconfig.co/json)
+
+city=$(echo "$geo" | jq -r '.city // .region // .region_name // empty')
+country=$(echo "$geo" | jq -r '.country // .country_name // empty')
+isp=$(echo "$geo" | jq -r '.org // .asn_org // .isp // empty')
+ip=$(echo "$geo" | jq -r '.ip // .ip_address // empty')
+[ -z "$ip" ] && ip=$(curl -s --max-time 5 ifconfig.me)
+
+if [[ $QUIET -eq 0 ]]; then
+  echo "${CYAN}🏙️  Location:${RESET} ${city:-Unknown City}, ${country:-Unknown Country}"
+  echo "${CYAN}🏢  ISP:${RESET} ${isp:-Unknown Provider}"
+  echo "${CYAN}🔢  IP:${RESET} ${ip:-Unavailable}"
+  echo ""
+fi
+
+# ------------------------- Run Test -------------------------
+tmp_file="/tmp/iris_realtime.json"
+rm -f "$tmp_file"
+
+if [[ $QUIET -eq 0 ]]; then
+  echo "${GREEN}Running Ookla speedtest (live)...${RESET}" | lolcat 2>/dev/null || echo "${GREEN}Running Ookla speedtest (live)...${RESET}"
+  echo ""
+fi
+
+speedtest -f jsonl > "$tmp_file" 2>/dev/null & pid=$!
+ping_series=()
+sparkline=""
+
+while ps -p $pid >/dev/null 2>&1; do
+  if [ -s "$tmp_file" ]; then
+    latest=$(tail -n 1 "$tmp_file"); stage=$(echo "$latest" | jq -r '.type // empty')
+    case "$stage" in
+      "ping")
+        ping=$(echo "$latest" | jq '.ping.latency // 0' | xargs printf "%.2f")
+        [[ "$ping" != "0.00" ]] && ping_series+=("$ping")
+        if [[ $QUIET -eq 0 ]]; then
+          color_code=$(ping_color_code "$ping")
+          new_char=$(heartbeat_sparkline "$ping")
+          sparkline="${sparkline}${new_char}"
+          # Limit sparkline length to prevent memory issues
+          sparkline="${sparkline: -$SPARKLINE_MAX_LEN}"
+          printf "\033[38;5;%dm⚡  Pinging... %s ms  %s\033[0m          \r" "$color_code" "$ping" "$sparkline"
+        fi
+        ;;
+      "download")
+        bw=$(echo "$latest" | jq '.download.bandwidth // 0')
+        [[ "$bw" -gt 0 ]] || continue
+        rate=$(bandwidth_to_mbps "$bw")
+        progress=$(echo "$latest" | jq '.download.progress // 0' | awk '{printf "%.0f", $1*100}')
+        if [[ $QUIET -eq 0 ]]; then
+          printf "⬇️  Download: %6.2f Mbps " "$rate"
+          progress_bar "$progress"
+        fi
+        ;;
+      "upload")
+        bw=$(echo "$latest" | jq '.upload.bandwidth // 0')
+        [[ "$bw" -gt 0 ]] || continue
+        rate=$(bandwidth_to_mbps "$bw")
+        progress=$(echo "$latest" | jq '.upload.progress // 0' | awk '{printf "%.0f", $1*100}')
+        if [[ $QUIET -eq 0 ]]; then
+          printf "📤 Upload:   %6.2f Mbps " "$rate"
+          progress_bar "$progress"
+        fi
+        ;;
+    esac
+  fi
+  sleep 0.3
+done
+
+if [[ $QUIET -eq 0 ]]; then
+  printf "\n"
+fi
+
+output=$(grep '"type":"result"' "$tmp_file" | tail -n 1)
+download_bw=$(echo "$output" | jq '.download.bandwidth // 0')
+upload_bw=$(echo "$output" | jq '.upload.bandwidth // 0')
+download=$(bandwidth_to_mbps "$download_bw")
+upload=$(bandwidth_to_mbps "$upload_bw")
+ping=$(echo "$output" | jq '.ping.latency // 0' | xargs printf "%.2f")
+server=$(echo "$output" | jq -r '.server.name // "Unknown Server"')
+
+if (( $(echo "$ping < 30" | bc -l) )); then rating="🌟 Excellent"
+elif (( $(echo "$ping < 70" | bc -l) )); then rating="👍 Good"
+else rating="🐢 Poor"; fi
+
+# Save to log file
+echo "$(date +'%Y-%m-%d %H:%M:%S'),$download,$upload,$ping,$server,$isp" >> "$log_file"
+
+# JSON output mode
+if [[ $JSON_OUTPUT -eq 1 ]]; then
+  timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date +"%Y-%m-%dT%H:%M:%SZ")
+  jq -n \
+    --arg timestamp "$timestamp" \
+    --arg download "$download" \
+    --arg upload "$upload" \
+    --arg ping "$ping" \
+    --arg server "$server" \
+    --arg isp "$isp" \
+    --arg city "$city" \
+    --arg country "$country" \
+    --arg ip "$ip" \
+    --arg rating "$rating" \
+    '{
+      timestamp: $timestamp,
+      download_mbps: ($download | tonumber),
+      upload_mbps: ($upload | tonumber),
+      ping_ms: ($ping | tonumber),
+      server: $server,
+      isp: $isp,
+      location: {
+        city: $city,
+        country: $country,
+        ip: $ip
+      },
+      rating: $rating
+    }'
+  exit 0
+fi
+
+# Regular output mode
+if [[ $QUIET -eq 0 ]]; then
+  draw_graph "${(j:\n:)ping_series}"
+  
+  echo "⚡ ${CYAN}Iris Results${RESET}"
+  echo "${CYAN}───────────────────────────────────────────────${RESET}"
+  printf "${GREEN}Server:${RESET}     %-20s\n" "$server"
+  printf "${GREEN}Download:${RESET}   %-10s Mbps\n" "$download"
+  printf "${GREEN}Upload:${RESET}     %-10s Mbps\n" "$upload"
+  printf "${GREEN}Ping:${RESET}        %-10s ms\n" "$ping"
+  printf "${GREEN}Quality:${RESET}     %s\n" "$rating"
+  echo "${CYAN}───────────────────────────────────────────────${RESET}"
+  echo "✅ Completed at $(date)" | lolcat 2>/dev/null || echo "✅ Completed at $(date)"
+  echo ""
+  
+  if [ -f "$log_file" ]; then
+    echo "${YELLOW}📊 Averages from $(wc -l < "$log_file") tests:${RESET}"
+    awk -F',' '{d+=$2;u+=$3;p+=$4} END{if (NR>0) printf "⬇️  Avg Download: %.2f Mbps\n⬆️  Avg Upload: %.2f Mbps\n⚡ Avg Ping: %.1f ms\n",d/NR,u/NR,p/NR}' "$log_file" | lolcat 2>/dev/null || \
+    awk -F',' '{d+=$2;u+=$3;p+=$4} END{if (NR>0) printf "⬇️  Avg Download: %.2f Mbps\n⬆️  Avg Upload: %.2f Mbps\n⚡ Avg Ping: %.1f ms\n",d/NR,u/NR,p/NR}' "$log_file"
+  fi
+  echo ""
+  echo "💾 Logs saved to: $log_file" | lolcat 2>/dev/null || echo "💾 Logs saved to: $log_file"
+  echo "${CYAN}───────────────────────────────────────────────${RESET}"
+else
+  # Quiet mode - minimal output
+  printf "Download: %s Mbps | Upload: %s Mbps | Ping: %s ms\n" "$download" "$upload" "$ping"
+fi
