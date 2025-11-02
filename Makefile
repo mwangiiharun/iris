@@ -8,11 +8,16 @@ help:
 	@echo "  test       - Run tests"
 	@echo "  clean      - Clean temporary files"
 	@echo "  sha256     - Calculate SHA256 for release tarball"
+	@echo "  deploy     - Bump version and deploy (interactive)"
 	@echo ""
 
 install:
 	@echo "Installing Iris via Homebrew..."
-	brew install --build-from-source Formula/iris.rb
+	@echo "Creating local tap for testing..."
+	@brew tap-new mwangiiharun/iris-test 2>/dev/null || true
+	@cp Formula/iris.rb $$(brew --repository)/Library/Taps/mwangiiharun/homebrew-iris-test/Formula/iris.rb 2>/dev/null || echo "Tap may already exist"
+	@brew tap mwangiiharun/iris-test 2>/dev/null || true
+	@brew install --build-from-source mwangiiharun/iris-test/iris
 
 uninstall:
 	@echo "Uninstalling Iris..."
@@ -34,4 +39,7 @@ sha256:
 	@echo "curl -L https://github.com/mwangiiharun/iris/archive/refs/tags/v5.1.tar.gz | shasum -a 256"
 	@echo ""
 	@echo "Then update Formula/iris.rb with the SHA256 value"
+
+deploy:
+	@./scripts/bump-and-deploy.sh
 

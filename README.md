@@ -26,23 +26,26 @@ A beautiful, feature-rich terminal speed test tool with real-time visualization,
 
 ### Homebrew (Recommended)
 
-#### Option 1: Install from Local Formula
+**All dependencies are automatically installed** during Homebrew installation, including:
+- `jq`, `bc`, `figlet`, `lolcat` (via Homebrew)
+- `speedtest` (Ookla Speedtest CLI - automatically downloaded if needed)
+
+#### Option 1: Install from Tap (Recommended)
 
 ```bash
-brew install --build-from-source Formula/iris.rb
+brew tap mwangiiharun/homebrew-iris
+brew install iris
 ```
 
-#### Option 2: Create Your Own Tap
+#### Option 2: Install from Local Formula
 
-1. Create a GitHub repository (e.g., `homebrew-tap`)
-2. Copy `Formula/iris.rb` to `Formula/iris.rb` in your tap
-3. Calculate SHA256 for your release tarball
-4. Update the formula with the SHA256
-5. Install:
+For testing local changes:
 
 ```bash
-brew tap yourusername/homebrew-tap
-brew install iris
+# Create local tap for testing
+brew tap-new mwangiiharun/iris-test
+cp Formula/iris.rb $(brew --repository)/Library/Taps/mwangiiharun/homebrew-iris-test/Formula/iris.rb
+brew install --build-from-source mwangiiharun/iris-test/iris
 ```
 
 ### Manual Installation
@@ -65,8 +68,18 @@ export PATH="$PATH:$(pwd)/bin"
 
 4. Install dependencies:
 ```bash
-brew install jq bc figlet lolcat ookla/speedtest/speedtest
+# Install required dependencies manually
+brew install jq bc figlet lolcat
+
+# Ookla Speedtest CLI (required for speed tests)
+# The script will automatically try to install this if missing, or you can install manually:
+# Option 1: Try via tap
+brew tap ookla/speedtest && brew install speedtest
+
+# Option 2: Download from https://www.speedtest.net/apps/cli
 ```
+
+**Note:** When installed via Homebrew, all dependencies are automatically installed for you.
 
 ## Usage
 
@@ -161,14 +174,16 @@ iris --stats
 
 - macOS or Linux
 - zsh shell
-- Homebrew (for dependencies)
+- Homebrew (for installation and dependencies)
 
-**Dependencies:**
-- `speedtest` (Ookla Speedtest CLI)
+**Dependencies (automatically installed via Homebrew):**
+- `speedtest` (Ookla Speedtest CLI) - Automatically downloaded if not available
 - `jq` - JSON processor
 - `bc` - Calculator
 - `figlet` - ASCII art
 - `lolcat` - Rainbow colors
+
+All dependencies are automatically installed when using Homebrew. Manual installation requires installing these separately.
 
 ## Performance Ratings
 
@@ -181,10 +196,18 @@ Ping quality ratings:
 
 ### Missing Dependencies
 
-If you get "command not found" errors, install missing dependencies:
+**If installed via Homebrew:** Dependencies should be automatically installed. If you encounter issues:
+
+1. Reinstall Iris: `brew reinstall iris`
+2. The formula will attempt to install speedtest automatically if missing
+
+**If installed manually:** Install dependencies:
 
 ```bash
-brew install jq bc figlet lolcat ookla/speedtest/speedtest
+brew install jq bc figlet lolcat
+
+# For speedtest, the script will prompt you with installation instructions
+# Or install manually: brew tap ookla/speedtest && brew install speedtest
 ```
 
 ### Permission Denied
@@ -196,10 +219,17 @@ chmod +x bin/iris
 
 ### Speedtest Issues
 
-Make sure Ookla Speedtest CLI is properly installed:
+**If installed via Homebrew:** Speedtest should be automatically installed. To verify:
 ```bash
-brew install ookla/speedtest/speedtest
 speedtest --version
+```
+
+If speedtest is missing, the formula will attempt to download it automatically. If that fails:
+```bash
+# Try manual installation
+brew tap ookla/speedtest && brew install speedtest
+
+# Or download from: https://www.speedtest.net/apps/cli
 ```
 
 ## Contributing
