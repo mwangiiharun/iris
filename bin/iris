@@ -1,9 +1,9 @@
 #!/bin/zsh
-VERSION="v5.2"
+VERSION="v5.3"
 AUTHOR="Mwangii K"
 
 # ============================================================
-# ⚡ Iris — The Messenger of Speed (v5.2)
+# ⚡ Iris — The Messenger of Speed (v5.3)
 # Author: Harun Mwangi Kinuthia
 # ============================================================
 
@@ -170,8 +170,13 @@ done
 
 check_dep() {
   command -v "$1" >/dev/null 2>&1 || {
-    echo "${YELLOW}Installing $1...${RESET}"
-    brew install "$1" >/dev/null 2>&1
+    echo "${YELLOW}Warning: $1 not found${RESET}"
+    echo "${YELLOW}Please install manually: brew install $1${RESET}"
+    if [[ "$1" == "speedtest" ]]; then
+      echo "${YELLOW}For Ookla Speedtest: brew tap ookla/speedtest && brew install speedtest${RESET}"
+      echo "${YELLOW}Or download from: https://www.speedtest.net/apps/cli${RESET}"
+      exit 1
+    fi
   }
 }
 check_dep "speedtest"; check_dep "jq"; check_dep "figlet"; check_dep "lolcat"; check_dep "bc"
