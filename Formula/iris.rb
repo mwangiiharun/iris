@@ -1,7 +1,7 @@
 class Iris < Formula
   desc "⚡ Iris — Fancy terminal speed test with gradients and sparkline"
-  homepage "https://github.com/mwangiiharun/hermes"
-  url "https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.2.tar.gz"
+  homepage "https://github.com/mwangiiharun/iris"
+  url "https://github.com/mwangiiharun/iris/archive/refs/tags/v5.2.tar.gz"
   sha256 "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed"
   license "MIT"
   version "5.2"

@@ -28,7 +28,7 @@ brew install --build-from-source Formula/iris.rb
 
 ```bash
 # For a tagged release tarball
-curl -L https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz | shasum -a 256
+curl -L https://github.com/mwangiiharun/iris/archive/refs/tags/v5.1.tar.gz | shasum -a 256
 ```
 
 5. Update the `sha256` value in the formula

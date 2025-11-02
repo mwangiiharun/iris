@@ -31,7 +31,7 @@ clean:
 
 sha256:
 	@echo "Calculate SHA256 for your release tarball:"
-	@echo "curl -L https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz | shasum -a 256"
+	@echo "curl -L https://github.com/mwangiiharun/iris/archive/refs/tags/v5.1.tar.gz | shasum -a 256"
 	@echo ""
 	@echo "Then update Formula/iris.rb with the SHA256 value"
 

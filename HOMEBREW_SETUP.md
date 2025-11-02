@@ -41,7 +41,7 @@ Before releasing, calculate the SHA256 hash for your release tarball:
 
 Or manually:
 ```bash
-curl -L https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz | shasum -a 256
+curl -L https://github.com/mwangiiharun/iris/archive/refs/tags/v5.1.tar.gz | shasum -a 256
 ```
 
 #### Step 4: Update Formula
@@ -102,8 +102,8 @@ Your `Formula/iris.rb` should look like:
 ```ruby
 class Iris < Formula
   desc "⚡ Iris — Fancy terminal speed test with gradients and sparkline"
-  homepage "https://github.com/mwangiiharun/hermes"
-  url "https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz"
+  homepage "https://github.com/mwangiiharun/iris"
+  url "https://github.com/mwangiiharun/iris/archive/refs/tags/v5.1.tar.gz"
   sha256 "abc123def456..."  # Real SHA256 hash
   license "MIT"
   version "5.1"

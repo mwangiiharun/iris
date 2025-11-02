@@ -139,7 +139,7 @@ brew install iris
 
 ### Manual Installation
 ```bash
-git clone https://github.com/mwangiiharun/hermes.git
+git clone https://github.com/mwangiiharun/iris.git
 cd iris
 chmod +x bin/iris
 export PATH="$PATH:$(pwd)/bin"
@@ -152,8 +152,8 @@ brew install jq bc figlet lolcat ookla/speedtest/speedtest
 
 ## 🔗 Links
 
-- **Repository:** https://github.com/mwangiiharun/hermes
-- **Issues:** https://github.com/mwangiiharun/hermes/issues
+- **Repository:** https://github.com/mwangiiharun/iris
+- **Issues:** https://github.com/mwangiiharun/iris/issues
 - **Documentation:** See README.md and HOMEBREW_SETUP.md
 
 ---

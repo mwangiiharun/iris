@@ -76,7 +76,7 @@ brew install iris
 
 **Manual:**
 ```bash
-git clone https://github.com/mwangiiharun/hermes.git
+git clone https://github.com/mwangiiharun/iris.git
 cd iris && chmod +x bin/iris
 export PATH="$PATH:$(pwd)/bin"
 ```

@@ -48,7 +48,7 @@ brew install iris
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/mwangiiharun/hermes.git
+git clone https://github.com/mwangiiharun/iris.git
 cd iris
 ```
 

@@ -24,15 +24,15 @@ jobs:
       - name: Update Formula
         run: |
           VERSION="${{ github.event.release.tag_name }}"
-          sed -i "s/sha256 \".*\"/sha256 \"${{ steps.sha256.outputs.sha256 }}\"/" Formula/hermes.rb
-          sed -i "s/url \".*\"/url \"https:\/\/github.com\/${{ github.repository }}\/archive\/refs\/tags\/${VERSION}.tar.gz\"/" Formula/hermes.rb
-          sed -i "s/version \".*\"/version \"${VERSION#v}\"/" Formula/hermes.rb
+          sed -i "s/sha256 \".*\"/sha256 \"${{ steps.sha256.outputs.sha256 }}\"/" Formula/iris.rb
+          sed -i "s/url \".*\"/url \"https:\/\/github.com\/${{ github.repository }}\/archive\/refs\/tags\/${VERSION}.tar.gz\"/" Formula/iris.rb
+          sed -i "s/version \".*\"/version \"${VERSION#v}\"/" Formula/iris.rb
 
       - name: Commit and push
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add Formula/hermes.rb
-          git commit -m "Update hermes formula to ${{ github.event.release.tag_name }}"
+          git add Formula/iris.rb
+          git commit -m "Update iris formula to ${{ github.event.release.tag_name }}"
           git push
 

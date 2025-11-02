@@ -26,7 +26,7 @@
    ```
 
 3. **Create GitHub Release:**
-   - Go to: https://github.com/mwangiiharun/hermes/releases/new
+   - Go to: https://github.com/mwangiiharun/iris/releases/new
    - Select tag: `v5.1`
    - Title: `v5.1 - The Messenger of Speed`
    - Description: Add release notes
