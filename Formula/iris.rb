@@ -1,10 +1,10 @@
 class Iris < Formula
   desc "⚡ Iris — Fancy terminal speed test with gradients and sparkline"
   homepage "https://github.com/mwangiiharun/iris"
-  url "https://github.com/mwangiiharun/iris/archive/refs/tags/v5.3.tar.gz"
-  sha256 "b71ce80db820b003c7dbdfad71ed4860d329e91e449b5b7344417509bc357495"
+  url "https://github.com/mwangiiharun/iris/archive/refs/tags/v5.4.tar.gz"
+  sha256 "PENDING_AFTER_TAG"
   license "MIT"
-  version "5.3"
+  version "5.4"
 
   depends_on "jq"
   depends_on "bc"
