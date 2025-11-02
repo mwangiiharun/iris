@@ -1,0 +1,38 @@
+# Hermes .gitignore
+
+# Test history files
+*.history
+.hermes_history
+
+# Temporary files
+*.tmp
+/tmp/hermes_*.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.*.sw?
+
+# Build artifacts
+*.o
+*.a
+*.dylib
+
+# Logs
+*.log
+
+# Test files
+/test/
+
+# Backup files
+*.bak
+*.backup
+
