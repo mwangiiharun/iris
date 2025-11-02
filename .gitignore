@@ -26,6 +26,8 @@
 *.a
 *.dylib
 
+
+
 # Logs
 *.log
 
@@ -35,4 +37,11 @@
 # Backup files
 *.bak
 *.backup
+
+# Ignore all markdown files except README.md
+*.md
+!README.md
+
+# Ignore all shell scripts
+*.sh
 
