@@ -1,12 +1,12 @@
-# Hermes .gitignore
+# Iris .gitignore
 
 # Test history files
 *.history
-.hermes_history
+.iris_history
 
 # Temporary files
 *.tmp
-/tmp/hermes_*.json
+/tmp/iris_*.json
 
 # macOS
 .DS_Store

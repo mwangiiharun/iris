@@ -1,6 +1,6 @@
 # Homebrew Installation Setup Guide
 
-This guide will help you set up Hermes for Homebrew installation.
+This guide will help you set up Iris for Homebrew installation.
 
 ## Quick Start
 
@@ -10,23 +10,23 @@ This guide will help you set up Hermes for Homebrew installation.
 # Calculate SHA256 first (if you have a GitHub release)
 ./scripts/calculate-sha256.sh v5.1
 
-# Update Formula/hermes.rb with the SHA256
+# Update Formula/iris.rb with the SHA256
 # Then install:
 make install
 # or
-brew install --build-from-source Formula/hermes.rb
+brew install --build-from-source Formula/iris.rb
 ```
 
 ### Option 2: Set Up Your Own Tap (Production)
 
 #### Step 1: Create GitHub Repository
 
-Create a new GitHub repository for your tap (e.g., `homebrew-hermes` or `homebrew-tap`).
+Create a new GitHub repository for your tap (e.g., `homebrew-iris` or `homebrew-tap`).
 
 #### Step 2: Set Up Tap Structure
 
 ```bash
-./scripts/setup-tap.sh homebrew-hermes mwangiiharun
+./scripts/setup-tap.sh homebrew-iris mwangiiharun
 ```
 
 This will create the tap structure in a sibling directory.
@@ -46,23 +46,23 @@ curl -L https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz | s
 
 #### Step 4: Update Formula
 
-Edit `Formula/hermes.rb` in your tap repository and replace `REPLACE_WITH_REAL_SHA256` with the calculated SHA256.
+Edit `Formula/iris.rb` in your tap repository and replace `REPLACE_WITH_REAL_SHA256` with the calculated SHA256.
 
 #### Step 5: Push to GitHub
 
 ```bash
-cd ../homebrew-hermes  # or your tap directory
+cd ../homebrew-iris  # or your tap directory
 git add .
-git commit -m "Add Hermes formula"
-git remote add origin git@github.com:mwangiiharun/homebrew-hermes.git
+git commit -m "Add Iris formula"
+git remote add origin git@github.com:mwangiiharun/homebrew-iris.git
 git push -u origin main
 ```
 
 #### Step 6: Install from Tap
 
 ```bash
-brew tap mwangiiharun/homebrew-hermes
-brew install hermes
+brew tap mwangiiharun/homebrew-iris
+brew install iris
 ```
 
 ## Making a Release
@@ -89,19 +89,19 @@ When creating a new release:
 
 5. **Commit and push** the updated formula:
    ```bash
-   cd ../homebrew-hermes
-   git add Formula/hermes.rb
-   git commit -m "Update hermes to v5.1"
+   cd ../homebrew-iris
+   git add Formula/iris.rb
+   git commit -m "Update iris to v5.1"
    git push
    ```
 
 ## Formula File Structure
 
-Your `Formula/hermes.rb` should look like:
+Your `Formula/iris.rb` should look like:
 
 ```ruby
-class Hermes < Formula
-  desc "⚡ Hermes — Fancy terminal speed test with gradients and sparkline"
+class Iris < Formula
+  desc "⚡ Iris — Fancy terminal speed test with gradients and sparkline"
   homepage "https://github.com/mwangiiharun/hermes"
   url "https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz"
   sha256 "abc123def456..."  # Real SHA256 hash
@@ -115,13 +115,13 @@ class Hermes < Formula
   depends_on "ookla/speedtest/speedtest"
 
   def install
-    bin.install "bin/hermes"
-    chmod 0755, bin/"hermes"
+    bin.install "bin/iris"
+    chmod 0755, bin/"iris"
   end
 
   test do
-    assert_match "Hermes v5.1", shell_output("#{bin}/hermes --version")
-    assert_match "Hermes", shell_output("#{bin}/hermes --help")
+    assert_match "Iris v5.1", shell_output("#{bin}/iris --version")
+    assert_match "Iris", shell_output("#{bin}/iris --help")
   end
 end
 ```
@@ -132,17 +132,17 @@ Before pushing to your tap, test locally:
 
 ```bash
 # Test installation
-brew install --build-from-source Formula/hermes.rb
+brew install --build-from-source Formula/iris.rb
 
 # Test the installed binary
-hermes --version
-hermes --help
+iris --version
+iris --help
 
 # Run formula tests
-brew test hermes
+brew test iris
 
 # Uninstall if needed
-brew uninstall hermes
+brew uninstall iris
 ```
 
 ## Troubleshooting

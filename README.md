@@ -1,4 +1,4 @@
-# ⚡ Hermes — The Messenger of Speed
+# ⚡ Iris — The Messenger of Speed
 
 A beautiful, feature-rich terminal speed test tool with real-time visualization, gradients, and sparklines.
 
@@ -28,20 +28,20 @@ A beautiful, feature-rich terminal speed test tool with real-time visualization,
 #### Option 1: Install from Local Formula
 
 ```bash
-brew install --build-from-source Formula/hermes.rb
+brew install --build-from-source Formula/iris.rb
 ```
 
 #### Option 2: Create Your Own Tap
 
 1. Create a GitHub repository (e.g., `homebrew-tap`)
-2. Copy `Formula/hermes.rb` to `Formula/hermes.rb` in your tap
+2. Copy `Formula/iris.rb` to `Formula/iris.rb` in your tap
 3. Calculate SHA256 for your release tarball
 4. Update the formula with the SHA256
 5. Install:
 
 ```bash
 brew tap yourusername/homebrew-tap
-brew install hermes
+brew install iris
 ```
 
 ### Manual Installation
@@ -49,12 +49,12 @@ brew install hermes
 1. Clone this repository:
 ```bash
 git clone https://github.com/mwangiiharun/hermes.git
-cd hermes
+cd iris
 ```
 
 2. Make executable:
 ```bash
-chmod +x bin/hermes
+chmod +x bin/iris
 ```
 
 3. Add to PATH (add to `~/.zshrc`):
@@ -73,13 +73,13 @@ brew install jq bc figlet lolcat ookla/speedtest/speedtest
 
 Run a speed test:
 ```bash
-hermes
+iris
 ```
 
 ### Command-Line Options
 
 ```bash
-hermes [OPTIONS]
+iris [OPTIONS]
 ```
 
 **Options:**
@@ -95,22 +95,22 @@ hermes [OPTIONS]
 
 ```bash
 # Normal speed test
-hermes
+iris
 
 # JSON output (for scripting)
-hermes --json
+iris --json
 
 # Quiet mode (minimal output)
-hermes --quiet
+iris --quiet
 
 # View test history
-hermes --history
+iris --history
 
 # Detailed statistics
-hermes --stats
+iris --stats
 
 # Skip banner
-hermes --no-banner
+iris --no-banner
 ```
 
 ## Output Formats
@@ -139,7 +139,7 @@ Machine-readable JSON format for automation:
 
 ## Test History
 
-Hermes automatically saves test results to `~/.hermes_history` in CSV format:
+Iris automatically saves test results to `~/.iris_history` in CSV format:
 
 ```
 timestamp,download,upload,ping,server,isp
@@ -148,12 +148,12 @@ timestamp,download,upload,ping,server,isp
 
 View history:
 ```bash
-hermes --history
+iris --history
 ```
 
 Get statistics:
 ```bash
-hermes --stats
+iris --stats
 ```
 
 ## Requirements
@@ -190,7 +190,7 @@ brew install jq bc figlet lolcat ookla/speedtest/speedtest
 
 Make sure the script is executable:
 ```bash
-chmod +x bin/hermes
+chmod +x bin/iris
 ```
 
 ### Speedtest Issues

@@ -7,7 +7,7 @@
 If you have a Homebrew tap repository set up:
 
 ```bash
-brew install mwangiiharun/tap/hermes
+brew install mwangiiharun/tap/iris
 ```
 
 ### Option 2: Install from Local Formula
@@ -16,14 +16,14 @@ brew install mwangiiharun/tap/hermes
 2. Install using the local formula:
 
 ```bash
-brew install --build-from-source Formula/hermes.rb
+brew install --build-from-source Formula/iris.rb
 ```
 
 ### Option 3: Create Your Own Tap
 
 1. Create a GitHub repository named `homebrew-tap` (or any name you prefer)
 2. Create a `Formula` directory in the repository
-3. Copy `Formula/hermes.rb` to your tap repository
+3. Copy `Formula/iris.rb` to your tap repository
 4. Calculate the SHA256 hash for the release tarball:
 
 ```bash
@@ -37,19 +37,19 @@ curl -L https://github.com/mwangiiharun/hermes/archive/refs/tags/v5.1.tar.gz | s
 
 ```bash
 brew tap yourusername/homebrew-tap
-brew install hermes
+brew install iris
 ```
 
 ## Manual Installation
 
 1. Make the script executable:
 ```bash
-chmod +x bin/hermes
+chmod +x bin/iris
 ```
 
 2. Add to your PATH (add to `~/.zshrc` or `~/.bashrc`):
 ```bash
-export PATH="$PATH:/path/to/hermes/bin"
+export PATH="$PATH:/path/to/iris/bin"
 ```
 
 3. Install dependencies:
@@ -62,22 +62,22 @@ brew install jq bc figlet lolcat ookla/speedtest/speedtest
 After installation, verify it works:
 
 ```bash
-hermes --version
-hermes --help
+iris --version
+iris --help
 ```
 
 ## Updating
 
-To update Hermes:
+To update Iris:
 
 ```bash
-brew upgrade hermes
+brew upgrade iris
 ```
 
 Or if installed manually:
 
 ```bash
-cd /path/to/hermes
+cd /path/to/iris
 git pull  # or download latest release
 ```
 

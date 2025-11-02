@@ -1,9 +1,9 @@
 #!/bin/zsh
-VERSION="v5.1"
+VERSION="v5.2"
 AUTHOR="Mwangii K"
 
 # ============================================================
-# ⚡ Hermes — The Messenger of Speed (v5.1)
+# ⚡ Iris — The Messenger of Speed (v5.2)
 # Author: Harun Mwangi Kinuthia
 # ============================================================
 
@@ -17,12 +17,12 @@ RESET=$(tput sgr0)
 QUIET=0
 JSON_OUTPUT=0
 SHOW_BANNER=1
-log_file="$HOME/.hermes_history"
+log_file="$HOME/.iris_history"
 
 # Help function
 show_help() {
   cat << EOF
-${CYAN}⚡ Hermes — The Messenger of Speed${RESET}
+${CYAN}⚡ Iris — The Messenger of Speed${RESET}
 
 Usage: hermes [OPTIONS]
 
@@ -52,7 +52,7 @@ while [[ $# -gt 0 ]]; do
       exit 0
       ;;
     -v|--version)
-      echo "Hermes ${VERSION} by ${AUTHOR}"
+      echo "Iris ${VERSION} by ${AUTHOR}"
       exit 0
       ;;
     -q|--quiet)
@@ -245,7 +245,7 @@ draw_graph() {
 # ------------------------- Banner -------------------------
 if [[ $SHOW_BANNER -eq 1 ]]; then
   clear
-  figlet -f slant "Hermes" | lolcat 2>/dev/null || echo "${CYAN}⚡ Hermes${RESET}"
+  figlet -f slant "Iris" | lolcat 2>/dev/null || echo "${CYAN}⚡ Iris${RESET}"
   echo "${CYAN}───────────────────────────────────────────────${RESET}"
   echo "${YELLOW}🕒  $(date)${RESET}"
   echo "${CYAN}───────────────────────────────────────────────${RESET}"
@@ -273,7 +273,7 @@ if [[ $QUIET -eq 0 ]]; then
 fi
 
 # ------------------------- Run Test -------------------------
-tmp_file="/tmp/hermes_realtime.json"
+tmp_file="/tmp/iris_realtime.json"
 rm -f "$tmp_file"
 
 if [[ $QUIET -eq 0 ]]; then
@@ -380,7 +380,7 @@ fi
 if [[ $QUIET -eq 0 ]]; then
   draw_graph "${(j:\n:)ping_series}"
   
-  echo "⚡ ${CYAN}Hermes Results${RESET}"
+  echo "⚡ ${CYAN}Iris Results${RESET}"
   echo "${CYAN}───────────────────────────────────────────────${RESET}"
   printf "${GREEN}Server:${RESET}     %-20s\n" "$server"
   printf "${GREEN}Download:${RESET}   %-10s Mbps\n" "$download"
