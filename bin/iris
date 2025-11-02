@@ -24,7 +24,7 @@ show_help() {
   cat << EOF
 ${CYAN}⚡ Iris — The Messenger of Speed${RESET}
 
-Usage: hermes [OPTIONS]
+Usage: iris [OPTIONS]
 
 Options:
   -h, --help          Show this help message
@@ -36,11 +36,11 @@ Options:
   --no-banner         Skip the banner display
 
 Examples:
-  hermes                  Run a speed test
-  hermes --json           Output results as JSON
-  hermes --history        View test history
-  hermes --stats          Show detailed statistics
-  hermes --quiet          Run with minimal output
+  iris                  Run a speed test
+  iris --json           Output results as JSON
+  iris --history        View test history
+  iris --stats          Show detailed statistics
+  iris --quiet          Run with minimal output
 EOF
 }
 

@@ -19,7 +19,7 @@ class Iris < Formula
   end
 
   test do
-    assert_match "Hermes v5.1", shell_output("#{bin}/iris --version")
-    assert_match "Hermes", shell_output("#{bin}/iris --help")
+    assert_match "Iris v5.2", shell_output("#{bin}/iris --version")
+    assert_match "Iris", shell_output("#{bin}/iris --help")
   end
 end

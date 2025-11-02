@@ -3,11 +3,12 @@
 A beautiful, feature-rich terminal speed test tool with real-time visualization, gradients, and sparklines.
 
 ```
- _   _                                      
-| | | | ___ _ __ _ __ ___  ___  ___ ___    
-| |_| |/ _ \ '__| '__/ _ \/ __|/ _ \ __|   
-|  _  |  __/ |  | | |  __/\__ \  __/ |     
-|_| |_|\___|_|  |_|  \___||___/\___|_|     
+     ____     _
+   /  _/____(_)____
+   / // ___/ / ___/
+ _/ // /  / (__  )
+/___/_/  /_/____/
+
 ```
 
 ## Features
